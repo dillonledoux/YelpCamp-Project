@@ -9,6 +9,7 @@ var express     = require("express"),
     User        = require("./models/user"),
     seedDB      = require("./seeds")
 
+//route files being required
 var auth_indexRoutes = require("./routes/auth_index"),
     commentsRoutes = require("./routes/comments"),
     campgroundsRoutes = require("./routes/campgrounds");
@@ -31,16 +32,18 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//makes current user available to every route
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;
    next();
 });
 
+//Routes
 app.use("/" ,auth_indexRoutes);
 app.use("/campgrounds/:id/comments", commentsRoutes);
 app.use("/campgrounds", campgroundsRoutes);
 
-
+//Server config
 app.listen("3000", "127.0.0.1", function(){
    console.log("The YelpCamp Server Has Started!");
 });

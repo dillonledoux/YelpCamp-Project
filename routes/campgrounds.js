@@ -50,6 +50,7 @@ router.get("/:id", function(req, res){
     });
 });
 
+//middleware to check for login state
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
