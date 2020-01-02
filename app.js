@@ -67,7 +67,7 @@ app.post("/campgrounds", function(req, res){
 });
 
 //NEW - show form to create new campground
-app.get("/campgrounds/new", function(req, res){
+app.get("/campgrounds/new",isLoggedIn, function(req, res){
    res.render("campgrounds/new"); 
 });
 
@@ -78,7 +78,6 @@ app.get("/campgrounds/:id", function(req, res){
         if(err){
             console.log(err);
         } else {
-            console.log(foundCampground)
             //render show template with that campground
             res.render("campgrounds/show", {campground: foundCampground});
         }
@@ -101,7 +100,7 @@ app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res){
     })
 });
 
-app.post("/campgrounds/:id/comments",isLoggedIn,function(req, res){
+app.post("/campgrounds/:id/comments",isLoggedIn, function(req, res){
    //lookup campground using ID
    Campground.findById(req.params.id, function(err, campground){
        if(err){
