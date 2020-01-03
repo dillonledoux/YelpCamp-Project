@@ -5,19 +5,22 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/campgrounds" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name">
+                    <label for="nameInput">Campground Name</label>
+                    <input class="form-control" id="nameInput" type="text" name="name" placeholder="name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
+                    <label for="imageUrlInput">Image URL</label>
+                    <input class="form-control" id="imageUrlInput" type="text" name="image" placeholder="image url">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="description">
+                    <label for="descInput">Description</label>
+                    <textarea class="form-control" id="descInput" type="text" name="description"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>
             </form>
-            <a href="/campgrounds">Go Back</a>
+            <a href="/campgrounds">Go back to campgrounds</a>
         </div>
     </div>
 </div>

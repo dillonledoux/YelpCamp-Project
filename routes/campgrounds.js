@@ -20,7 +20,11 @@ router.post("/", isLoggedIn, function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
-    var newCampground = {name: name, image: image, description: desc}
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    var newCampground = {name: name, image: image, description: desc, author: author};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, newlyCreated){
         if(err){
@@ -57,6 +61,44 @@ function isLoggedIn(req, res, next){
     }
     res.redirect("/login");
 }
+
+//Edit route
+router.get("/:id/edit", function(req, res){
+    //is user logged in? 
+    // does user own campground? 
+    if
+
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+        }else{
+            res.render("campgrounds/edit", {campground: foundCampground});
+        };
+    })
+});
+
+router.put("/:id", function(req, res){
+    //find and update the campground
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
+        if(err){
+            console.log(err);
+            res.redirect("/campgrounds");
+        }
+        else{
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    })
+})
+
+router.delete("/:id", function(req, res){
+    Campground.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        } 
+        res.redirect("/campgrounds");
+    })
+})
+
 
 
 module.exports = router;
