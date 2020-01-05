@@ -23,9 +23,11 @@ router.get("/register", function(req, res){
      User.register(newUser, req.body.password, function(err, user){
          if(err){
              console.log(err);
+             req.flash("error", err.message);
              return res.render("register");
          }
          passport.authenticate("local")(req, res, function(){
+            req.flash("success", "Successfully Registered, welcome to YelpCamp " +req.body.username+ "!");
             res.redirect("/campgrounds"); 
          });
      });
@@ -46,15 +48,8 @@ router.get("/register", function(req, res){
  // logic route
  router.get("/logout", function(req, res){
     req.logout();
+    req.flash("error", "Successfully logged out!");
     res.redirect("/campgrounds");
  });
-
- //checking for login state
- function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;
