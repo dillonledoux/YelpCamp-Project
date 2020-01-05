@@ -21,7 +21,7 @@ var campgroundSchema = new mongoose.Schema({
    ]
 });
 
-CampgroundSchema.pre('remove', async function() {
+campgroundSchema.pre('remove', async function() {
    await Comment.remove({
       _id: {
          $in: this.comments
