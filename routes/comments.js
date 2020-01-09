@@ -7,19 +7,19 @@ var middleware = require("../middleware");
 // ====================
 // COMMENTS ROUTES
 // ====================
-
+// New comment show page
 router.get("/new", middleware.isLoggedIn, function(req, res){
     // find campground by id
     Campground.findById(req.params.id, function(err, campground){
         if(err){
             console.log(err);
-            
         } else {
              res.render("comments/new", {campground: campground});
         }
     })
 });
 
+//create new comment
 router.post("/",middleware.isLoggedIn, function(req, res){
    //lookup campground using ID
    Campground.findById(req.params.id, function(err, campground){
@@ -39,16 +39,12 @@ router.post("/",middleware.isLoggedIn, function(req, res){
                comment.save();
                campground.comments.push(comment);
                campground.save();
-               console.log(comment);
                req.flash("success", "Comment posted successfully!");
                res.redirect('/campgrounds/' + campground._id);
            }
         });
        }
    });
-   //create new comment
-   //connect new comment to campground
-   //redirect campground show page
 });
 
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
