@@ -14,7 +14,7 @@ var auth_indexRoutes = require("./routes/auth_index"),
     commentsRoutes = require("./routes/comments"),
     campgroundsRoutes = require("./routes/campgrounds");
     
-mongoose.connect("mongodb+srv://dillon:WiByfXnqPrX3of1G@cluster0-rnyae.mongodb.net/test?retryWrites=true&w=majority");
+mongoose.connect(process.env.DATABASEURL);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
