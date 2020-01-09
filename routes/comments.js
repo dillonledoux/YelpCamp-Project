@@ -23,7 +23,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 router.post("/",middleware.isLoggedIn, function(req, res){
    //lookup campground using ID
    Campground.findById(req.params.id, function(err, campground){
-       if(err){
+       if(err || !campground){
            console.log(err);
            req.flash("error", "Something went wrong...");
            res.redirect("/campgrounds");
@@ -53,7 +53,7 @@ router.post("/",middleware.isLoggedIn, function(req, res){
 
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
     Comment.findById(req.params.comment_id, function(err, comment){
-        if(err){
+        if(err || !comment){
             console.log(err);
             req.flash("error", "Something went wrong...");
             res.redirect("back");
@@ -65,7 +65,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
 
 router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
-        if(err){
+        if(err || !updatedComment){
             console.log(err);
             req.flash("error", "Something went wrong...");
             res.redirect("/campgrounds");
@@ -78,14 +78,15 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
 });
 
 router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
-    Comment.findByIdAndRemove(req.params.comment_id, function(err){
-        if(err){
+    Comment.findByIdAndRemove(req.params.comment_id, function(err, removedComment){
+        if(err || !removedComment){
             console.log(err);
             req.flash("error", "Something went wrong...");
+            res.redirect("/campgrounds");
         } else{
             req.flash("success", "Comment was deleted");
+            res.redirect("/campgrounds/" +req.params.id);
         }
-        res.redirect("/campgrounds/" +req.params.id);
     })
 })
 
