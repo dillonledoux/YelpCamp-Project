@@ -1,3 +1,4 @@
+
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
 
