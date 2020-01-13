@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const Campground = require("../models/campground");
@@ -36,7 +37,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
             res.redirect("/campgrounds");
         } else {
             //redirect back to campgrounds page
-            req.flash("success", `Successfully added the campground  ${newlyCreated.name}!`);
+            req.flash("success", `Successfully added the campground ${newlyCreated.name}!`);
             res.redirect("/campgrounds");
         }
     });
@@ -57,7 +58,7 @@ router.get("/:id", function(req, res){
             res.redirect("/campgrounds");
         } else {
             //render show template with that campground
-            res.render("campgrounds/show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground, GOOGLE_API: process.env.GOOGLE_API});
         }
     });
 });
@@ -83,7 +84,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
             res.redirect("/campgrounds");
         }
         else{
-            res.redirect("/campgrounds/" + req.params.id);
+            res.redirect(`/campgrounds/${req.params.id}`);
         }
     })
 })
@@ -95,7 +96,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
             req.flash("error", "Campground Not Found");
             res.redirect("/campgrounds");
         } else{
-            req.flash("success", "Successfully deleted the campground " +removedCampground.name);
+            req.flash("success", `Successfully deleted the campground ${removedCampground.name}`);
             res.redirect("/campgrounds");
         }
     })

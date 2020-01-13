@@ -15,7 +15,7 @@ const express         = require("express"),
 const auth_indexRoutes = require("./routes/auth_index"),
     commentsRoutes = require("./routes/comments"),
     campgroundsRoutes = require("./routes/campgrounds");
-    
+ 
 mongoose.connect(process.env.DATABASEURL);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
