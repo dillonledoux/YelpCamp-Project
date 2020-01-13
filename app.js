@@ -1,4 +1,6 @@
-var express         = require("express"),
+require('dotenv').config();
+
+const express         = require("express"),
     app             = express(),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
@@ -10,7 +12,7 @@ var express         = require("express"),
     seedDB          = require("./seeds")
 
 //route files being required
-var auth_indexRoutes = require("./routes/auth_index"),
+const auth_indexRoutes = require("./routes/auth_index"),
     commentsRoutes = require("./routes/comments"),
     campgroundsRoutes = require("./routes/campgrounds");
     
@@ -42,7 +44,6 @@ app.use(function(req, res, next){
    res.locals.currentUser = req.user;
    res.locals.error = req.flash("error");
    res.locals.success = req.flash("success");
-
    next();
 });
 
@@ -52,7 +53,7 @@ app.use("/campgrounds/:id/comments", commentsRoutes);
 app.use("/campgrounds", campgroundsRoutes);
 
 //Server config
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, function(){
    console.log("The YelpCamp Server Has Started!");
 });

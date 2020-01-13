@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var User = require("../models/user");
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const User = require("../models/user");
 
 //root route
 router.get("/", function(req, res){
@@ -19,7 +19,7 @@ router.get("/register", function(req, res){
  });
  //handle sign up logic
  router.post("/register", function(req, res){
-     var newUser = new User({username: req.body.username});
+     let newUser = new User({username: req.body.username});
      User.register(newUser, req.body.password, function(err, user){
          if(err){
              console.log(err);
@@ -27,7 +27,7 @@ router.get("/register", function(req, res){
              return res.render("register");
          }
          passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Successfully Registered, welcome to YelpCamp " +req.body.username+ "!");
+            req.flash("success", `Successfully Registered, welcome to YelpCamp ${req.body.username}!`);
             res.redirect("/campgrounds"); 
          });
      });
